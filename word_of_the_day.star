@@ -5,11 +5,6 @@ load("render.star", "render")
 
 WORD_OF_THE_DAY_URL = "https://www.merriam-webster.com/word-of-the-day"
 
-# Speed of the definition
-# 1 - too fast
-# 5 - too slow
-SPEED = 3
-
 
 def main():
     content = http.get(WORD_OF_THE_DAY_URL).body()
@@ -34,8 +29,9 @@ def main():
         "adverb": "adv.",
         "adjective": "adj.",
     }.get(part, "???")
-    tokens = ["--"] + definition.split() + ["--"]
+    tokens = definition.split() + [".", "..", "..."]
     return render.Root(
+        delay=133,
         child=render.Column(
             children=[
                 render.Marquee(
@@ -46,11 +42,8 @@ def main():
                 render.Box(
                     render.Animation(
                         children=[
-                            render.Text(
-                                content=tokens[i // SPEED],
-                                color="#89a"
-                            )
-                            for i in range(len(tokens * SPEED))
+                            render.Text(content=t, color="#89a")
+                            for t in tokens
                         ]
                     ),
                 )
