@@ -20,8 +20,8 @@ def main():
     )
     definition = search(
         content=content,
-        after='<h2>Definition</h2>',
-        regex=':</strong> (.+?)</p>',
+        after='<h2>What It Means</h2>',
+        regex='</em> means "(.+?)."</p>',
     )
     pretty_part = {
         "noun": "noun",
@@ -54,9 +54,9 @@ def main():
 
 def search(content, after, regex):
     """Return the first regex match after a given string"""
-    index = content.index(content)
+    index = content.index(after) + len(after)
     start, end = re.search(regex, content[index:])
-    substring = content[start:end]
+    substring = content[index + start:index + end]
     # Hackily extract the first capture group
     trim_from_front = regex.index("(")
     trim_from_back = regex.index(")") - len(regex) + 1
