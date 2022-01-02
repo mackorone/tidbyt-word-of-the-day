@@ -21,7 +21,7 @@ def main():
     definition = search(
         content=content,
         after='<h2>What It Means</h2>',
-        regex='</em> means "(.+?)."</p>',
+        regex='</em> (.+?).</p>',
     )
     pretty_part = {
         "noun": "noun",
